@@ -1,5 +1,5 @@
 # mytelebot
-This is code for mytelebot
+This is code for mytelebot. It is writen in Go. It uses TELE_TOKEN env var for telegram bot API token.
 
 You can access it by link
 
