@@ -1,0 +1,11 @@
+go mod init github.com/pontarr/mytelebot
+go install github.com/spf13/cobra-cli@latest
+cobra-cli init
+cobra-cli add version
+cobra-cli add kbot
+go run main.go version
+go build -ldflags "-X="github.com/pontarr/mytelebot.cmd.appVersion=v1.0.0
+./mytelebot version
+rm mytelebot 
+# windoes
+go build -ldflags "-X 'github.com/pontarr/mytelebot/cmd.appVersion=v1.0.0'"
