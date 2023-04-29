@@ -10,7 +10,7 @@ import (
 	"time"
 
 	"github.com/spf13/cobra"
-	tele "gopkg.in/telebot.v3"
+	telebot "gopkg.in/telebot.v3"
 )
 
 var (
@@ -32,10 +32,10 @@ to quickly create a Cobra application.`,
 
 		fmt.Printf("kbot %s started", appVersion)
 
-		kbot, err := tele.NewBot(tele.Settings{
+		kbot, err := telebot.NewBot(telebot.Settings{
 			URL:    "",
 			Token:  Teletoken,
-			Poller: &tele.LongPoller{Timeout: 10 * time.Second},
+			Poller: &telebot.LongPoller{Timeout: 10 * time.Second},
 		})
 
 		if err != nil {
@@ -43,7 +43,7 @@ to quickly create a Cobra application.`,
 			return
 		}
 
-		kbot.Handle(tele.OnText, func(ctx tele.Context) error {
+		kbot.Handle(telebot.OnText, func(ctx telebot.Context) error {
 			log.Printf(ctx.Message().Payload, ctx.Text())
 			payload := ctx.Message().Payload
 
