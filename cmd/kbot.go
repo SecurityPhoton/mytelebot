@@ -60,7 +60,7 @@ to quickly create a Cobra application.`,
 			case "info":
 				err = m.Send(fmt.Sprintln("This is code for mytelebot. It is writen in Go. It uses 'TELE_TOKEN' env var for telegram bot API token.!"))
 
-			case "London":
+			default:
 				cityName := strings.TrimSpace(strings.Replace(m.Text(), "/get", "", 1))
 				log.Printf("City = %s", cityName)
 				request := gorequest.New()
