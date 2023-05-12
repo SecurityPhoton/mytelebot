@@ -51,7 +51,6 @@ to quickly create a Cobra application.`,
 			log.Printf(m.Message().Payload, m.Text())
 			payload := m.Message().Payload
 			log.Print(payload)
-			
 
 			switch payload {
 			case "hello":
