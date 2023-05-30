@@ -8,7 +8,7 @@ image:
   repository: pontarr
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v1.0.3-fc3bec2"
+  tag: "v1.0.3-ba6447b"
   arch: amd64
 
 secret:
