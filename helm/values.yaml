@@ -5,10 +5,11 @@
 replicaCount: 1
 
 image:
-  repository: pontarr/mytelebot
+  repository: pontarr
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v1.0.2-11d2f67-arm64"
+  tag: "v1.0.2-11d2f67"
+  arch: amd64
 
 secret:
   name: kbot
@@ -21,10 +22,4 @@ autoscaling:
   maxReplicas: 1
   targetCPUUtilizationPercentage: 80
 
-serviceAccount:
-  create: true
-  name: my-serviceaccount
 
-service:
-  port: 80
-  type: ClusterIP
