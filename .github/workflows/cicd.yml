@@ -26,7 +26,7 @@ jobs:
             - name: Build&Push
               env:
                 APP: "mytelebot"
-                REGISTRY: ${{ secrets.GITHUB_TOKEN }}
+                REGISTRY: ${{ secrets.REGISTRY_TOKEN }}
               run: make image push
 
     cd: 
