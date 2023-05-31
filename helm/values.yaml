@@ -4,18 +4,16 @@
 
 replicaCount: 1
 image:
-  repository: gcr.io/phonic-agility-384312/mytelebot
+  repository: gcr.io/phonic-agility-384312
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "v1.0.4u-71b3e0f-amd64"
   arch: amd64
+env:
 secret:
-  name: kbot
-  key: tokent
-  env: TELE_TOKEN
-  name: wapi
-  key: tokenw
-  env: WEATHER_API
+  name: "kbot"
+  env: "TELE_TOKEN"
+  key: "token"
 autoscaling:
   enabled: true
   minReplicas: 1
