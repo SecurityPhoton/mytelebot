@@ -3,23 +3,18 @@
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
-
 image:
   repository: pontarr
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v1.0.3-ba6447b"
+  tag: "v1.0.4u-f506ec0-amd64"
   arch: amd64
-
 secret:
   name: kbot
   tokenKey: token
   tokenName: TELE_TOKEN
-
 autoscaling:
   enabled: true
   minReplicas: 1
   maxReplicas: 1
   targetCPUUtilizationPercentage: 80
-
-
