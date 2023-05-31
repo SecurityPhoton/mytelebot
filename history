@@ -8,5 +8,10 @@ go build -ldflags "-X 'github.com/pontarr/mytelebot/cmd.appVersion=v1.0.0'"
 ./mytelebot version
 rm mytelebot 
 
+helm package <dir>
+gh release create
+gh release list
+gh release upload <RELEASE> <CHART_NAME>.tgz
+
 helm install my-chart --set-string env.TELE_TOKEN=<tele_token_value> --set-string env.WEATHER_API=<weather_api_value>
 helm install mychart --set kbot.token=<kbot_token_value> --set wapi.token=<wapi_token_value>
