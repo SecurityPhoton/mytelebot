@@ -42,7 +42,7 @@ jobs:
 
         - uses: mikefarah/yq@master
           with:
-            cmd: yq -i '.image.tag=strenv(VERSION)'
+            cmd: yq -i eval '.image.tag = strenv(VERSION)' deployment.yaml
 
         - run: |
             git config user.name github-actions
