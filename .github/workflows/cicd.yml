@@ -10,6 +10,8 @@ jobs:
         steps:
             - name: Checkout
               uses: actions/checkout@v3
+              with: 
+                fetch-depth: 0
 
             - name: Run test
               run: make test
@@ -20,3 +22,31 @@ jobs:
                     registry: gcr.io
                     username: _json_key
                     password: ${{ secrets.GCR_JSON_KEY }}
+            
+            - name: Build&Push
+              env:
+                APP: "mytelebot"
+                REGISTRY: ${{ secrets.GITHUB_TOKEN }}
+              run: make image push
+
+    cd: 
+      name: CD
+      needs: ci
+      runs-on: ubuntu-latest
+
+      steps:
+        - uses: actions/checkout@v3
+          with: 
+            fetch-depth: 0
+        - run: echo "VERSION=$(git describe --tags --abbrev=0)-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+        - uses: mikefarah/yq@master
+          with:
+            cmd: yq -i '.image.tag=strenv(VERSION)'
+
+        - run: |
+            git config user.name github-actions
+            git config user.email github-actions@github.com
+            git commit -am "update version $VERSION"
+            git push
+
