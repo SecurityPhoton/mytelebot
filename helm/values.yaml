@@ -3,14 +3,12 @@
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
-
 image:
-  repository: gcr.io/phonic-agility-384312
+  repository: gcr.io/phonic-agility-384312/mytelebot
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v1.0.4u-f506ec0-amd64"
+  tag: "v1.0.4u-71b3e0f-amd64"
   arch: amd64
-
 secret:
   name: kbot
   key: tokent
@@ -18,11 +16,8 @@ secret:
   name: wapi
   key: tokenw
   env: WEATHER_API
-
 autoscaling:
   enabled: true
   minReplicas: 1
   maxReplicas: 1
   targetCPUUtilizationPercentage: 80
-
-
