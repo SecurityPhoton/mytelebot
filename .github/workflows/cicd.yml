@@ -42,7 +42,9 @@ jobs:
 
         - uses: mikefarah/yq@master
           with:
-            cmd: yq -i eval '.image.tag = strenv(VERSION)' helm/values.yaml
+            cmd:
+                 yq -i eval '.image.tag = strenv(VERSION)' helm/values.yaml
+                 yq -i eval '.image.repository = gcr.io/phonic-agility-384312/mytelebot' helm/values.yaml
             
         - run: |
             git config user.name github-actions

@@ -8,3 +8,4 @@ go build -ldflags "-X 'github.com/pontarr/mytelebot/cmd.appVersion=v1.0.0'"
 ./mytelebot version
 rm mytelebot 
 
+helm install my-chart --set-string env.TELE_TOKEN=<tele_token_value> --set-string env.WEATHER_API=<weather_api_value>

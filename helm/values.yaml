@@ -3,18 +3,26 @@
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
+
 image:
-  repository: pontarr
+  repository: gcr.io/phonic-agility-384312
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "v1.0.4u-f506ec0-amd64"
   arch: amd64
+
 secret:
   name: kbot
-  tokenKey: token
-  tokenName: TELE_TOKEN
+  key: tokent
+  env: TELE_TOKEN
+  name: wapi
+  key: tokenw
+  env: WEATHER_API
+
 autoscaling:
   enabled: true
   minReplicas: 1
   maxReplicas: 1
   targetCPUUtilizationPercentage: 80
+
+
