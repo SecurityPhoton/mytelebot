@@ -2,10 +2,10 @@ APP=$(shell basename $(shell git remote get-url origin))
 REGISTRY=pontarr
 VERSION=$(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HEAD)
 TARGETARCH=amd64
-PROJECT_ID := phonic-agility-384312
+PROJECT_ID := pontarr
 IMAGE_NAME := mytelebot
 OS := linux
-IMAGE := gcr.io/$(PROJECT_ID)/$(IMAGE_NAME):${VERSION}-${OS}-${TARGETARCH}
+IMAGE := ghcr.io/$(PROJECT_ID)/$(IMAGE_NAME):${VERSION}-${OS}-${TARGETARCH}
 
 format:
 	gofmt -s -w ./

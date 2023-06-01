@@ -16,17 +16,17 @@ jobs:
             - name: Run test
               run: make test
 
-            - name: Login to GCR
+              name: Login to GitHub Container Registry
               uses: docker/login-action@v2
               with:
-                    registry: gcr.io
-                    username: _json_key
-                    password: ${{ secrets.GCR_JSON_KEY }}
+                registry: ghcr.io
+                username: ${{ github.actor }}
+                password: ${{ secrets.GITHUB_TOKEN }}
             
             - name: Build&Push
               env:
                 APP: "mytelebot"
-                REGISTRY: ${{ secrets.REGISTRY_TOKEN }}
+                REGISTRY: ghcr.io
               run: make image push
 
     cd: 

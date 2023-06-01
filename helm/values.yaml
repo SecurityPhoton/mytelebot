@@ -4,7 +4,7 @@
 fullnameOverride: mytelebot-pod-rel
 replicaCount: 1
 image:
-  repository: gcr.io/phonic-agility-384312
+  repository: pontarr/mytelebot
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "v1.0.5-765e5ec-linux-amd64"
