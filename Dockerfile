@@ -8,4 +8,4 @@ FROM scratch
 WORKDIR / 
 COPY --from=builder /go/src/app/mytelebot .
 COPY --from=alpine:latest /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
-ENTRYPOINT ["./mytelebot start"]
+ENTRYPOINT ["./mytelebot", "start"]
