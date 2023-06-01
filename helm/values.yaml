@@ -7,7 +7,7 @@ image:
   repository: gcr.io/phonic-agility-384312
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v1.0.5-9b038a7-amd64"
+  tag: "v1.0.5-765e5ec-linux-amd64"
   arch: amd64
 env:
 secret1:
