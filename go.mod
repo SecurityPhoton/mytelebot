@@ -10,8 +10,12 @@ require (
 
 require (
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
+	github.com/mitchellh/go-homedir v1.1.0 // indirect
+	github.com/nishanths/go-hgconfig v1.0.1 // indirect
+	github.com/nishanths/license v1.0.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	golang.org/x/net v0.0.0-20220520000938-2e3eb7b945c2 // indirect
+	github.com/tcnksm/go-gitconfig v0.1.2 // indirect
+	golang.org/x/net v0.10.0 // indirect
 	moul.io/http2curl v1.0.0 // indirect
 )

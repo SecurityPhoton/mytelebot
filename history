@@ -17,7 +17,7 @@ gh release delete-asset <RELEASE> <FILE>
 kubectl create secret generic wapi --from-literal=tokenw=<wapi_token_value>
 kubectl create secret generic kbot --from-literal=tokenw=<kbot_token_value>
 
-helm install mychart --set env[0].name=TELE_TOKEN,env[0].valueFrom.secretKeyRef.name=kbot,env[0].valueFrom.secretKeyRef.key=tokent,env[1].name=WEATHER_API,env[1].valueFrom.secretKeyRef.name=wapi,env[1].valueFrom.secretKeyRef.key=tokenw
+kubectl create secret generic kbot --from-literal=token=
 
 helm install my-chart --set-string env.TELE_TOKEN=<tele_token_value> --set-string env.WEATHER_API=<weather_api_value>
 helm install mychart --set kbot.token=<kbot_token_value> --set wapi.token=<wapi_token_value>
