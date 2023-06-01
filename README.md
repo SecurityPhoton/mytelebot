@@ -38,3 +38,8 @@ Access in TG https://t.me/gotelebot_bot
 ``` /get Tokio ```
 
 will show the temparature in Tokio now
+
+## The Workflow
+The workflow for app CI\CD is like
+Git push -> Git Hub -> Git Actions on push -> Push to repository grc.io 
+On Changes the argocd see the push and redeploys the application on k3d cluster.
