@@ -14,10 +14,22 @@ gh release list
 gh release upload <RELEASE> <CHART_NAME>.tgz
 gh release delete-asset <RELEASE> <FILE>
 
-kubectl create secret generic wapi --from-literal=tokenw=<wapi_token_value>
-kubectl create secret generic kbot --from-literal=tokenw=<kbot_token_value>
+kubectl create secret generic wapi --from-literal=token=<wapi_token_value>
+kubectl create secret generic kbot --from-literal=token=<kbot_token_value>
 
 kubectl create secret generic kbot --from-literal=token=
 
 helm install my-chart --set-string env.TELE_TOKEN=<tele_token_value> --set-string env.WEATHER_API=<weather_api_value>
 helm install mychart --set kbot.token=<kbot_token_value> --set wapi.token=<wapi_token_value>
+
+helm repo add argo https://argoproj.github.io/argo-helm
+ helm repo update
+
+ kubectl port-forward service/my-argo-cd-argocd-server -n default 8080:443&
+kubectl get deploy my-argo-cd-argocd-server
+kubectl edit deploy my-argo-cd-argocd-server
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
+
+The API server should then be run with TLS disabled. Edit the argocd-server deployment to add the --insecure
+:wq!
+
