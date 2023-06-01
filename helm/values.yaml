@@ -4,7 +4,7 @@
 fullnameOverride: mytelebot-pod-rel
 replicaCount: 1
 image:
-  repository: pontarr/mytelebot
+  repository: ghcr.io/pontarr
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "v1.0.5-b012073-linux-amd64"
