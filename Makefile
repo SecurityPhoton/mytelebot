@@ -4,7 +4,8 @@ VERSION=$(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HE
 TARGETARCH=amd64
 PROJECT_ID := phonic-agility-384312
 IMAGE_NAME := mytelebot
-IMAGE := gcr.io/$(PROJECT_ID)/$(IMAGE_NAME):${VERSION}-${TARGETARCH}
+OS := linux
+IMAGE := gcr.io/$(PROJECT_ID)/$(IMAGE_NAME):${VERSION}-${OS}-${TARGETARCH}
 
 format:
 	gofmt -s -w ./
