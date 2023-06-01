@@ -7,7 +7,7 @@ image:
   repository: ghcr.io/pontarr
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v1.0.5-b012073-linux-amd64"
+  tag: "v1.0.5-6a6dd96-linux-amd64"
   arch: amd64
 env:
 secret1:
