@@ -3,6 +3,7 @@ pipeline {
     environment {
         REPO = 'https://github.com/pontarr/mytelebot'
         BRANCH = 'develop'
+        PATH = "/usr/local/go/bin:${env.PATH}"
     }
     parameters {
 
@@ -16,7 +17,7 @@ pipeline {
             steps {
                 echo 'Clone Repository'
                 git branch: "${BRANCH}", url: "${REPO}"
-                sh 'source ~/.bashrc'
+                
                   }
          }
         
