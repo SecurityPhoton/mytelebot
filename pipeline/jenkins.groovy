@@ -16,7 +16,7 @@ pipeline {
             steps {
                 echo 'Clone Repository'
                 git branch: "${BRANCH}", url: "${REPO}"
-                sh 'export PATH=$PATH:/usr/local/go/bin'
+                sh 'source ~/.bashrc'
                   }
          }
         
