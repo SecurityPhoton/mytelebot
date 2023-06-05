@@ -34,5 +34,24 @@ pipeline {
                     sh "make build TARGETOS=${params.OS} TARGETARCH=${params.ARCH}"
                   }
         }
+
+        stage("image") {
+            steps {
+                    echo 'MAKE IAMGE:'
+                    sh "make image"
+                }
+            }
+
+        stage("push"){
+            steps {
+                echo 'MAKE PUSH'
+                script {
+                    docker.withRegistry('','ghcr.io') {
+                        sh 'make push'
+                    }
+                }
+
+            }
+        }
     }
 }
