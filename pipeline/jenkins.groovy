@@ -34,7 +34,7 @@ pipeline {
                                 env.ARCH = params.ARCH
                             }
                     echo 'MAKE BUILD'
-                     echo 'OS = ${params.OS} OS = ${params.OS}'
+                    echo 'envOS = ${env.OS} envARCH = ${env.ARCH}'
                     sh 'make build'
                   }
         }
