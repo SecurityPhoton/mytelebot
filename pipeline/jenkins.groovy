@@ -1,5 +1,9 @@
-pipeline {
+make buildpipeline {
     agent any
+    environment {
+        REPO = 'https://github.com/pontarr/mytelebot'
+        BRACH = 'develop'
+    }
     parameters {
 
         choice(name: 'OS', choices: ['linux', 'darwin', 'windows', 'all'], description: 'Pick OS')
@@ -8,13 +12,24 @@ pipeline {
 
     }
     stages {
-        stage('Example') {
+        stage('clone') {
             steps {
-                echo "Build for platform ${params.OS}"
-
+                echo "Clone Repository ${params.OS}"
+                git branch: "${BRANCH}", url: "${REPO}"
+                
                 echo "Build for arch: ${params.ARCH}"
 
-            }
+                 }
+         }
+        
+        stage('build') {
+            echo "MAKE BUILD"
+            script {
+                    env.OS = params.OS
+                    env.ARCH = params.ARCH
+                }
+            
+            sh 'make build OS=${env.OS} ARCH=${env.ARCH}'
         }
     }
 }
