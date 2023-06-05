@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         REPO = 'https://github.com/pontarr/mytelebot'
-        BRACH = 'develop'
+        BRANCH = 'develop'
     }
     parameters {
 
