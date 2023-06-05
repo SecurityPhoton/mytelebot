@@ -12,18 +12,18 @@ make buildpipeline {
 
     }
     stages {
-        stage('clone') {
+        stage("clone") {
             steps {
-                echo "Clone Repository"
+                echo 'Clone Repository'
                 git branch: "${BRANCH}", url: "${REPO}"
                   }
          }
         
-        stage('build') {
+        stage("build") {
             steps {
-            echo "MAKE BUILD"
-            sh 'make build OS=${params.OS} ARCH=${params.ARCH}'
-            }
+                    echo 'MAKE BUILD'
+                    sh 'make build OS=${params.OS} ARCH=${params.ARCH}'
+                  }
         }
     }
 }
