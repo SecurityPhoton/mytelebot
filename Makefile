@@ -1,10 +1,10 @@
 APP=$(shell basename $(shell git remote get-url origin))
 REGISTRY=pontarr
 VERSION=$(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HEAD)
-#TARGETARCH=amd64
+TARGETARCH ?=amd64
 PROJECT_ID := pontarr
 IMAGE_NAME := mytelebot
-#TARGETOS := linux
+TARGETOS ?= linux
 IMAGE := ghcr.io/$(PROJECT_ID)/$(IMAGE_NAME):${VERSION}-${TARGETOS}-${TARGETARCH}
 
 format:
