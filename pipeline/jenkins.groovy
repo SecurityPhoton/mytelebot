@@ -14,22 +14,14 @@ make buildpipeline {
     stages {
         stage('clone') {
             steps {
-                echo "Clone Repository ${params.OS}"
+                echo "Clone Repository"
                 git branch: "${BRANCH}", url: "${REPO}"
-                
-                echo "Build for arch: ${params.ARCH}"
-
-                 }
+                  }
          }
         
         stage('build') {
             echo "MAKE BUILD"
-            script {
-                    env.OS = params.OS
-                    env.ARCH = params.ARCH
-                }
-            
-            sh 'make build OS=${env.OS} ARCH=${env.ARCH}'
+            sh 'make build OS=${params.OS} ARCH=${params.ARCH}'
         }
     }
 }
