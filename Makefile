@@ -31,6 +31,3 @@ push:
 clean:
 	rm -rf mytelebot
 	docker rmi ${IMAGE}
-
-test:
-	go test -v
