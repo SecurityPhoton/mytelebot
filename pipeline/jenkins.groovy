@@ -20,7 +20,7 @@ make buildpipeline {
          }
         
         stage('build') {
-            step {
+            steps {
             echo "MAKE BUILD"
             sh 'make build OS=${params.OS} ARCH=${params.ARCH}'
             }
