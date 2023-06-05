@@ -28,14 +28,8 @@ pipeline {
 
         stage("build") {
             steps {
-
-                    script {
-                                env.OS = params.OS
-                                env.ARCH = params.ARCH
-                            }
-                    echo 'MAKE BUILD'
-                    echo 'envOS = ${env.OS} envARCH = ${env.ARCH}'
-                    sh 'make build'
+                    echo 'MAKE BUILD:'
+                    sh 'make build TARGETOS=${params.OS} TARGETARCH=${params.ARCH}'
                   }
         }
     }
