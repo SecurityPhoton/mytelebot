@@ -19,10 +19,23 @@ pipeline {
                   }
          }
         
+        stage("test") {
+            steps {
+                echo 'MAKE TEST'
+                sh 'make test'
+            }
+        }
+
         stage("build") {
             steps {
+
+                    script {
+                                env.OS = params.OS
+                                env.ARCH = params.ARCH
+                            }
                     echo 'MAKE BUILD'
-                    sh 'make build OS=${params.OS} ARCH=${params.ARCH}'
+                     echo 'OS = ${params.OS} OS = ${params.OS}'
+                    sh 'make build'
                   }
         }
     }
