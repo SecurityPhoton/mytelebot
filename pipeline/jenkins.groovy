@@ -1,4 +1,4 @@
-make buildpipeline {
+pipeline {
     agent any
     environment {
         REPO = 'https://github.com/pontarr/mytelebot'
