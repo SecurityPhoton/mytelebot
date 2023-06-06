@@ -27,6 +27,8 @@ jobs:
               env:
                 APP: "mytelebot"
                 REGISTRY: ghcr.io
+                TARGETARCH: amd64
+                TARGETOS: linux
               run: make image push
 
     cd: 

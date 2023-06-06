@@ -44,4 +44,4 @@ The workflow for app CI\CD is like
 Git push -> Git Hub -> Git Actions on push -> Push to repository ghcr.io 
 On Changes the argocd see the push and redeploys the application on k3d cluster.
 
-![Image](/cicd.drawio.svg) 
+![Image](/cicd.drawio.png) 
