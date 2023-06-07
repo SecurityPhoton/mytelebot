@@ -8,7 +8,6 @@ import (
 	"log"
 	"os"
 	"regexp"
-	"strconv"
 	"strings"
 	"time"
 
@@ -16,15 +15,6 @@ import (
 	"github.com/spf13/cobra"
 	telebot "gopkg.in/telebot.v3"
 )
-
-func kelvinToCelsius(kStr string) string {
-	k, err := strconv.ParseFloat(kStr, 64)
-	if err != nil {
-		return ""
-	}
-	c := k - 273.15
-	return fmt.Sprintf("%.2f", c)
-}
 
 var (
 	Teletoken = os.Getenv("TELE_TOKEN")
@@ -98,11 +88,13 @@ to quickly create a Cobra application.`,
 				} else {
 					fmt.Println("The body does not contain a 404 error")
 
-					temp := strings.TrimSpace(strings.Split(strings.Split(body, "\"temp\":")[1], ",")[0])
-					temp = strings.TrimSuffix(temp, ".")
-					celsius := kelvinToCelsius(temp)
+					formatted, err := ParseOutput(body)
+					//temp := strings.TrimSpace(strings.Split(strings.Split(body, "\"temp\":")[1], ",")[0])
+					//temp = strings.TrimSuffix(temp, ".")
 
-					response := "The current temperature in " + cityName + " is " + celsius + " C."
+					fmt.Printf("ERROR %s", err)
+					response := formatted
+					//"The current temperature in " + cityName + " is " + celsius + " C."
 					fmt.Printf("The response is %s", response)
 					kbot.Send(m.Sender(), response)
 				}
