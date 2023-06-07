@@ -1,0 +1,3 @@
+GKE_NUM_NODES=3
+GOOGLE_REGION=us-central1
+GOOGLE_PROJECT=my-project-id
