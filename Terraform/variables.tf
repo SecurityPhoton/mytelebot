@@ -10,9 +10,9 @@ variable "GOOGLE_REGION" {
 }
 
 variable "GKE_NUM_NODES" {
-  type = number
+  type        = number
   description = "Number of nodes in GKE"
-  default = 2
+  default     = 2
 }
 
 variable "GKE_MACHINE_TYPE" {
