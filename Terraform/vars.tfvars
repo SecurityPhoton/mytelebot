@@ -1,3 +1,4 @@
 GKE_NUM_NODES=3
-GOOGLE_REGION=us-central1
+GOOGLE_REGION=europe-north1
 GOOGLE_PROJECT=my-project-id
+GKE_MACHINE_TYPE=e2-small

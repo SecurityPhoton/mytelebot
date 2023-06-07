@@ -14,3 +14,9 @@ variable "GKE_NUM_NODES" {
   description = "Number of nodes in GKE"
   default = 2
 }
+
+variable "GKE_MACHINE_TYPE" {
+  type        = string
+  default     = "n1-standard-1"
+  description = "Machine type"
+}
