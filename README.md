@@ -1,16 +1,16 @@
 # mytelebot
 This is code for mytelebot. It is writen in Go. It uses 'TELE_TOKEN' env var for telegram bot API token.
-Also uses api http://api.openweathermap.org for displaying temparature in K in the city
+Also uses api http://api.openweathermap.org for displaying weather forecast for now in the city you specify
 
 You can access it by link
 
-https://t.me/gotelebot_bot
+https://t.me/gotelebot_bot or you can use your own bot
 
 Currently it supports next comands:
 
 - /start hello  - shows version
 - /get info - shows info about the bot
-- /get <city_name> - show weather in the city now
+- /get <city_name> - show temparature in K in the city now
 
 How to build bot:
 
@@ -45,3 +45,5 @@ Git push -> Git Hub -> Git Actions on push -> Push to repository ghcr.io
 On Changes the argocd see the push and redeploys the application on k3d cluster.
 
 ![Image](/cicd.drawio.png) 
+
+
