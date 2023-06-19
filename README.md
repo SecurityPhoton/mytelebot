@@ -10,7 +10,7 @@ Currently it supports next comands:
 
 - /start hello  - shows version
 - /get info - shows info about the bot
-- /get <city_name> - show temparature in K in the city now
+- /get <city_name> - show weather in the city now
 
 How to build bot:
 
