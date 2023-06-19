@@ -8,7 +8,7 @@ image:
   repository: pontarr/mytelebot
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v1.0.6-84e1b96"
+  tag: "v1.0.6-9f73d2f"
   os: linux
   arch: amd64
 env:
