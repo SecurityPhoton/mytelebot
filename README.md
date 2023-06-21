@@ -2,7 +2,7 @@
 This is code for mytelebot. It is writen in Go. It uses 'TELE_TOKEN' env var for telegram bot API token.
 Also uses api http://api.openweathermap.org for displaying weather forecast for now in the city you specify
 
-You can access it by [link](https://t.me/gotelebot_bot) or you can use your own bot
+You can access it by [link](https://t.me/gotelebot_bot) or you can use your own bot.
 
 Currently it supports next comands:
 
