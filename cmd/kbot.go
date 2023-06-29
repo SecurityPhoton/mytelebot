@@ -4,6 +4,7 @@ Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"os"
@@ -11,17 +12,66 @@ import (
 	"strings"
 	"time"
 
+	"github.com/hirosassa/zerodriver"
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetricgrpc"
+	sdkmetric "go.opentelemetry.io/otel/sdk/metric"
+	"go.opentelemetry.io/otel/sdk/resource"
+	semconv "go.opentelemetry.io/otel/semconv/v1.12.0"
+
 	"github.com/parnurzeal/gorequest"
 	"github.com/spf13/cobra"
 	telebot "gopkg.in/telebot.v3"
 )
 
 var (
-	Teletoken = os.Getenv("TELE_TOKEN")
-	WAPI      = os.Getenv("WEATHER_API")
-	pattern   = regexp.MustCompile("^[a-zA-Z]{2,12}$")
-	city      = "/get Kyiv"
+	Teletoken   = os.Getenv("TELE_TOKEN")
+	WAPI        = os.Getenv("WEATHER_API")
+	pattern     = regexp.MustCompile("^[a-zA-Z]{2,12}$")
+	city        = "/get Kyiv"
+	MetricsHost = os.Getenv("METRICS_HOST")
 )
+
+func initMetrics(ctx context.Context) {
+
+	// Create a new OTLP Metric gRPC exporter with the specified endpoint and options
+	exporter, _ := otlpmetricgrpc.New(
+		ctx,
+		otlpmetricgrpc.WithEndpoint(MetricsHost),
+		otlpmetricgrpc.WithInsecure(),
+	)
+
+	// Define the resource with attributes that are common to all metrics.
+	// labels/tags/resources that are common to all metrics.
+	resource := resource.NewWithAttributes(
+		semconv.SchemaURL,
+		semconv.ServiceNameKey.String(fmt.Sprintf("kbot_%s", appVersion)),
+	)
+
+	// Create a new MeterProvider with the specified resource and reader
+	mp := sdkmetric.NewMeterProvider(
+		sdkmetric.WithResource(resource),
+		sdkmetric.WithReader(
+			// collects and exports metric data every 10 seconds.
+			sdkmetric.NewPeriodicReader(exporter, sdkmetric.WithInterval(10*time.Second)),
+		),
+	)
+
+	// Set the global MeterProvider to the newly created MeterProvider
+	otel.SetMeterProvider(mp)
+
+}
+
+func pmetrics(ctx context.Context, payload string) {
+	// Get the global MeterProvider and create a new Meter with the name "kbot_light_signal_counter"
+	meter := otel.GetMeterProvider().Meter("kbot_request_counter")
+
+	// Get or create an Int64Counter instrument with the name "kbot_light_signal_<payload>"
+	counter, _ := meter.Int64Counter(fmt.Sprintf("kbot_request_%s", payload))
+
+	// Add a value of 1 to the Int64Counter
+	counter.Add(ctx, 1)
+}
 
 // kbotCmd represents the kbot command
 var kbotCmd = &cobra.Command{
@@ -38,6 +88,7 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 
 	Run: func(cmd *cobra.Command, args []string) {
+		logger := zerodriver.NewProductionLogger()
 
 		fmt.Printf("kbot %s started", appVersion)
 		fmt.Printf("TAPI= %s", Teletoken)
@@ -55,9 +106,12 @@ to quickly create a Cobra application.`,
 		}
 
 		kbot.Handle(telebot.OnText, func(m telebot.Context) error {
+			logger.Info().Str("Payload", m.Text()).Msg(m.Message().Payload)
+
 			log.Printf(m.Message().Payload, m.Text())
 			payload := m.Message().Payload
 			log.Print(payload)
+			pmetrics(context.Background(), payload)
 
 			if pattern.MatchString(payload) {
 				city = payload
