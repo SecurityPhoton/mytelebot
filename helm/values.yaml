@@ -8,7 +8,7 @@ image:
   repository: pontarr/mytelebot
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v1.0.6-31e3337"
+  tag: "v1.0.6-48ffbfb"
   os: linux
   arch: amd64
 env:
@@ -23,7 +23,6 @@ secret2:
 secret3:
   name: "METRICS_HOST"
   value: collector:4317
-  
 autoscaling:
   enabled: true
   minReplicas: 1
