@@ -5,7 +5,7 @@ services:
 
   # Mytelebot
   kbot:
-    image: ghcr.io/pontarr/mytelebot:${IMTAG}-linux-amd64
+    image: ghcr.io/pontarr/mytelebot:${IMTAG}
     environment:
       - METRICS_HOST=collector:4317
       - TELE_TOKEN=${TELE_TOKEN}
