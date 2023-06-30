@@ -47,7 +47,7 @@ jobs:
             cmd: |
                  yq -i eval '.image.tag = strenv(VERSION)' helm/values.yaml
                  yq -i eval '.version = strenv(VERSION)' helm/Chart.yaml
-                 sed -i "s|IMTAG=.*|IMTAG=${VERSION}|g" otel/.env
+                 sed -i "s|IMTAG=.*|IMTAG=${VERSION}-linux-amd64|g" otel/.env
             
         - run: |
             git config user.name github-actions
