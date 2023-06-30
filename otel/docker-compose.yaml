@@ -3,7 +3,7 @@ services:
 
   # Kbot
   kbot:
-    image: ghcr.io/pontarr/mytelebot:v1.0.6-37f7023-linux-amd64
+    image: ghcr.io/pontarr/mytelebot:v1.0.6-09ce158-linux-amd64
     environment:
       - METRICS_HOST=collector:4317
       - TELE_TOKEN=${TELE_TOKEN}

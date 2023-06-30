@@ -101,10 +101,12 @@ to quickly create a Cobra application.`,
 		})
 
 		if err != nil {
+			logger.Fatal().Str("Error", err.Error()).Msg("Please check TELE_TOKEN")
 			log.Fatalf("Please check TELE_TOKEN env variable. %s", err)
 			return
+		} else {
+			logger.Info().Str("Version", appVersion).Msg("kbot started")
 		}
-
 		kbot.Handle(telebot.OnText, func(m telebot.Context) error {
 			logger.Info().Str("Payload", m.Text()).Msg(m.Message().Payload)
 
@@ -172,6 +174,9 @@ to quickly create a Cobra application.`,
 }
 
 func init() {
+	ctx := context.Background()
+	initMetrics(ctx)
+
 	rootCmd.AddCommand(kbotCmd)
 
 	// Here you will define your flags and configuration settings.
