@@ -1,0 +1,299 @@
+apiVersion: v2
+name: mytelebot
+description: A Helm chart for deploying mytelebot
+
+# Define the default values for the chart
+# You can customize these by providing a values.yaml file or by passing --set options to the helm install command
+# See https://helm.sh/docs/chart_template_guide/values_files/ for more information
+
+# Define the Kubernetes resources to be created
+# See https://helm.sh/docs/chart_template_guide/templates/ for more information
+templates:
+  # OTEL contrib collector for Laki
+  collector-deployment.yaml:
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: {{ include "mytelebot.fullname" . }}-collector
+      labels:
+        app: collector
+        release: {{ .Release.Name }}
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: collector
+          release: {{ .Release.Name }}
+      template:
+        metadata:
+          labels:
+            app: collector
+            release: {{ .Release.Name }}
+        spec:
+          containers:
+            - name: collector
+              image: otel/opentelemetry-collector-contrib:0.78.0
+              command:
+                - "--config=/etc/otel-collector-config.yaml"
+              volumeMounts:
+                - name: config
+                  mountPath: /etc/otel-collector-config.yaml
+                  subPath: otel-collector-contrib.yaml
+              ports:
+                - containerPort: 4317
+          volumes:
+            - name: config
+              configMap:
+                name: {{ include "mytelebot.fullname" . }}-collector-config
+
+  collector-service.yaml:
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: {{ include "mytelebot.fullname" . }}-collector
+      labels:
+        app: collector
+        release: {{ .Release.Name }}
+    spec:
+      selector:
+        app: collector
+        release: {{ .Release.Name }}
+      ports:
+        - name: collector
+          port: 4317
+          targetPort: 4317
+
+  # Prom
+  prometheus-deployment.yaml:
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: {{ include "mytelebot.fullname" . }}-prometheus
+      labels:
+        app: prometheus
+        release: {{ .Release.Name }}
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: prometheus
+          release: {{ .Release.Name }}
+      template:
+        metadata:
+          labels:
+            app: prometheus
+            release: {{ .Release.Name }}
+        spec:
+          containers:
+            - name: prometheus
+              image: prom/prometheus:latest
+              command:
+                - "--config.file=/etc/prometheus.yaml"
+                - "--web.enable-remote-write-receiver"
+                - "--enable-feature=exemplar-storage"
+              volumeMounts:
+                - name: config
+                  mountPath: /etc/prometheus.yaml
+                  subPath: prometheus.yaml
+              ports:
+                - containerPort: 9090
+          volumes:
+            - name: config
+              configMap:
+                name: {{ include "mytelebot.fullname" . }}-prometheus-config
+
+  prometheus-service.yaml:
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: {{ include "mytelebot.fullname" . }}-prometheus
+      labels:
+        app: prometheus
+        release: {{ .Release.Name }}
+    spec:
+      selector:
+        app: prometheus
+        release: {{ .Release.Name }}
+      ports:
+        - name: prometheus
+          port: 9090
+          targetPort: 9090
+
+  # FluentBit
+  fluentbit-deployment.yaml:
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: {{ include "mytelebot.fullname" . }}-fluentbit
+      labels:
+        app: fluentbit
+        release: {{ .Release.Name }}
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: fluentbit
+          release: {{ .Release.Name }}
+      template:
+        metadata:
+          labels:
+            app: fluentbit
+            release: {{ .Release.Name }}
+        spec:
+          containers:
+            - name: fluentbit
+              image: fluent/fluent-bit:latest
+              volumeMounts:
+                - name: config
+                  mountPath: /fluent-bit/etc/fluent-bit.conf
+                  subPath: fluent-bit.conf
+                - name: docker-metadata
+                  mountPath: /fluent-bit/bin/docker-metadata.lua
+                  subPath: docker-metadata.lua
+                - name: var
+                  mountPath: /var
+                - name: proc
+                  mountPath: /host/proc
+                  readOnly: true
+                - name: sys
+                  mountPath: /host/sys
+                  readOnly: true
+              ports:
+                - containerPort: 3001
+          volumes:
+            - name: config
+              configMap:
+                name: {{ include "mytelebot.fullname" . }}-fluentbit-config
+            - name: docker-metadata
+              configMap:
+                name: {{ include "mytelebot.fullname" . }}-fluentbit-docker-metadata
+
+  fluentbit-service.yaml:
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: {{ include "mytelebot.fullname" . }}-fluentbit
+      labels:
+        app: fluentbit
+        release: {{ .Release.Name }}
+    spec:
+      selector:
+        app: fluentbit
+        release: {{ .Release.Name }}
+      ports:
+        - name: fluentbit
+          port: 3001
+          targetPort: 3001
+
+  # Loki
+  loki-deployment.yaml:
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: {{ include "mytelebot.fullname" . }}-loki
+      labels:
+        app: loki
+        release: {{ .Release.Name }}
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: loki
+          release: {{ .Release.Name }}
+      template:
+        metadata:
+          labels:
+            app: loki
+            release: {{ .Release.Name }}
+        spec:
+          containers:
+            - name: loki
+              image: grafana/loki:2.8.2
+              command:
+                - "-config.file=/etc/loki/local-config.yaml"
+                - "-log.level=error"
+              volumeMounts:
+                - name: config
+                  mountPath: /etc/loki/local-config.yaml
+                  subPath: loki-local-config.yaml
+              ports:
+                - containerPort: 3100
+          volumes:
+            - name: config
+              configMap:
+                name: {{ include "mytelebot.fullname" . }}-loki-config
+
+  loki-service.yaml:
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: {{ include "mytelebot.fullname" . }}-loki
+      labels:
+        app: loki
+        release: {{ .Release.Name }}
+    spec:
+      selector:
+        app: loki
+        release: {{ .Release.Name }}
+      ports:
+        - name: loki
+          port: 3100
+          targetPort: 3100
+
+  # Grafana
+  grafana-deployment.yaml:
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: {{ include "mytelebot.fullname" . }}-grafana
+      labels:
+        app: grafana
+        release: {{ .Release.Name }}
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: grafana
+          release: {{ .Release.Name }}
+      template:
+        metadata:
+          labels:
+            app: grafana
+            release: {{ .Release.Name }}
+        spec:
+          containers:
+            - name: grafana
+              image: grafana/grafana:9.4.3
+              env:
+                - name: GF_AUTH_ANONYMOUS_ENABLED
+                  value: "true"
+                - name: GF_AUTH_ANONYMOUS_ORG_ROLE
+                  value: "Admin"
+                - name: GF_AUTH_DISABLE_LOGIN_FORM
+                  value: "true"
+                - name: GF_FEATURE_TOGGLES_ENABLE
+                  value: "traceqlEditor"
+                - name: GF_SERVER_HTTP_PORT
+                  value: "3002"
+              volumeMounts:
+                - name: datasources
+                  mountPath: /etc/grafana/provisioning/datasources/datasources.yaml
+                  subPath: grafana-datasources.yaml
+              ports:
+                - containerPort: 3002
+          volumes:
+            - name: datasources
+              configMap:
+                name: {{ include "mytelebot.fullname" . }}-grafana-datasources
+
+  grafana-service.yaml:
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: {{ include "mytelebot.fullname" . }}-grafana
+      labels:
+        app: grafana
+        release: {{ .Release.Name }}
+    spec:
+      selector:
+        app: grafana

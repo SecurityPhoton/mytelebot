@@ -20,6 +20,10 @@ secret2:
   name: "wapi"
   env: "WEATHER_API"
   key: "token"
+secret3:
+  name: "METRICS_HOST"
+  value: collector:4317
+  
 autoscaling:
   enabled: true
   minReplicas: 1

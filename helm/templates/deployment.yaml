@@ -52,6 +52,11 @@ spec:
               secretKeyRef:
                 key: {{ .Values.secret2.key }}
                 name: {{ .Values.secret2.name }}
+          - name: 
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secret3.name }}
+                value: {{ .Values.secret3.value }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
 
       

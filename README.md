@@ -45,3 +45,27 @@ On Changes the argocd see the push and redeploys the application on k3d cluster.
 ![Image](/cicd.drawio.png) 
 
 
+# Open-telemetry observability
+
+Sample configuration for Mytelebot that send logs to [OpenTelemetry Collector] and metrics to [OpenTelemetry Collector] or [Prometheus].
+
+## Prerequisites
+
+- [Docker]
+- [Docker Compose]
+
+## How to run
+
+```bash
+git clone https://github.com/pontarr/mytelebot.git
+git checkout opentelemetry
+cd mytelebot/otel/
+export TELE_TOKEN=<TOKEN>
+export WEATHER_API=<TOKEN>
+docker-compose up
+```
+This will start all telemetry on local machine. Here is the sample pictures of how this will work:
+
+![Image](/weather_bot.gif) 
+
+![Image](/otel_web.gif) 

@@ -11,5 +11,6 @@ Sample configuration for Kbot that send logs to [OpenTelemetry Collector] and me
 
 ```bash
 export TELE_TOKEN=<TOKEN>
+export WEATHER_API=<TOKEN>
 docker-compose up
 ```
