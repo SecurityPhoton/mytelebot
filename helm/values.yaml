@@ -23,6 +23,7 @@ secret2:
 secret3:
   name: "METRICS_HOST"
   value: collector:4317
+branch: opentelemetry
   
 autoscaling:
   enabled: true

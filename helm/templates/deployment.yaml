@@ -57,6 +57,8 @@ spec:
               secretKeyRef:
                 name: {{ .Values.secret3.name }}
                 value: {{ .Values.secret3.value }}
+          - name: BRANCH
+            value: {{.Values.branch }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
 
       
