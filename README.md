@@ -15,7 +15,7 @@ Currently it supports next comands:
 How to build bot:
 
 Don`t forget to have GO installed on your system and get the token API from bot_father from telegram
-```git clone https://github.com/pontarr/mytelebot.git ```
+```git clone https://github.com/SecurityPhoton/mytelebot.git ```
 
 ```cd mytelebot ```
 
